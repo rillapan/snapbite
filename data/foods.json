@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "rendang",
+    "nama": "Rendang",
+    "daerah": "Sumatera Barat",
+    "tagline": "Masakan berempah dari tanah Minang",
+    "deskripsi_singkat": "Daging sapi yang dimasak perlahan dengan santan dan rempah hingga kering dan berwarna cokelat kehitaman.",
+    "sejarah": "Rendang adalah masakan daging khas Minangkabau yang telah ada sejak abad ke-16. Makanan ini lahir dari tradisi merantau masyarakat Minang — karena dimasak hingga kering, rendang dapat bertahan berminggu-minggu tanpa kulkas, menjadikannya bekal ideal bagi para perantau yang menempuh perjalanan jauh.\n\nProses memasaknya membutuhkan kesabaran luar biasa. Daging sapi dimasak berjam-jam dalam campuran santan kelapa dan lebih dari empat puluh jenis rempah seperti serai, lengkuas, cabai, dan kunyit. Api dikecilkan pelan-pelan hingga santan mengering sempurna dan rempah meresap ke dalam setiap serat daging, menciptakan lapisan rasa yang berlapis-lapis.\n\nDi tahun 2011, CNN International menempatkan rendang sebagai makanan terenak nomor satu di dunia dalam daftar \"World's 50 Most Delicious Foods.\" Pencapaian ini bukan sekadar kebanggaan kuliner, melainkan pengakuan dunia terhadap kekayaan rasa dan warisan budaya Nusantara yang telah bertahan selama berabad-abad.",
+    "gambar": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Rendang_daging_%28beef_rendang%29.jpg/800px-Rendang_daging_%28beef_rendang%29.jpg",
+    "maps_embed_url": "https://maps.google.com/maps?q=Padang,Sumatera+Barat,Indonesia&output=embed"
+  },
+  {
+    "slug": "gudeg",
+    "nama": "Gudeg",
+    "daerah": "Yogyakarta",
+    "tagline": "Kelezatan manis dari Kota Budaya",
+    "deskripsi_singkat": "Olahan nangka muda yang dimasak dengan santan dan gula kelapa hingga berwarna cokelat dan bercita rasa manis gurih.",
+    "sejarah": "Gudeg adalah makanan khas Yogyakarta yang lahir dari kearifan lokal masyarakat Jawa dalam memanfaatkan hasil bumi. Nangka muda yang melimpah di pedesaan diolah bersama santan dan gula kelapa melalui proses memasak panjang yang menghasilkan cita rasa manis gurih yang khas dan tak tergantikan.\n\nSejarah gudeg erat kaitannya dengan perkembangan Keraton Yogyakarta pada abad ke-18. Konon, masakan ini mulai populer di kalangan rakyat biasa sebagai alternatif lauk yang terjangkau namun mengenyangkan. Seiring waktu, gudeg bertransformasi menjadi simbol identitas kuliner Yogyakarta yang dikenal hingga penjuru nusantara.\n\nHari ini, Yogyakarta memiliki kawasan khusus bernama Kampung Wijilan yang dikenal sebagai pusat gudeg legendaris. Di sepanjang gang sempit itu, puluhan warung gudeg buka dari tengah malam hingga subuh, menyajikan tradisi kuliner yang telah berlangsung lintas generasi dan terus mempertahankan resep turun-temurun.",
+    "gambar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Gudeg_Yogyakarta.jpg/800px-Gudeg_Yogyakarta.jpg",
+    "maps_embed_url": "https://maps.google.com/maps?q=Yogyakarta,Daerah+Istimewa+Yogyakarta,Indonesia&output=embed"
+  },
+  {
+    "slug": "pempek",
+    "nama": "Pempek",
+    "daerah": "Sumatera Selatan",
+    "tagline": "Cita rasa ikan dan cuka khas Palembang",
+    "deskripsi_singkat": "Olahan ikan tenggiri yang dicampur tepung sagu, disajikan dengan kuah cuka pedas asam yang segar dan khas.",
+    "sejarah": "Pempek adalah kuliner ikonik Palembang yang dipercaya sudah ada sejak abad ke-16, saat pedagang Tionghoa menetap di tepi Sungai Musi. Mereka mengolah ikan sungai yang melimpah dengan mencampurnya bersama tepung sagu, menciptakan makanan yang praktis, kenyal, dan kaya protein yang cocok untuk bekal dan jajanan sehari-hari.\n\nNama \"pempek\" berasal dari sapaan \"apek\" atau \"pek\" yang digunakan untuk memanggil pria tua keturunan Tionghoa. Para pedagang tua itulah yang berkeliling menjajakan makanan ini dengan pikulan di bahu, sehingga makanannya ikut dinamai sesuai sosok sang penjual yang menjadi ikon di jalanan Palembang.\n\nKunci kelezatan pempek terletak pada kuah cukanya — campuran gula merah, asam jawa, cabai, dan udang ebi yang menciptakan rasa asam, manis, dan pedas dalam satu kuapan. Variasi populernya meliputi kapal selam yang berisi telur utuh di dalamnya, lenjer berbentuk silinder panjang, dan adaan bulat yang renyah.",
+    "gambar": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Pempek_palembang.jpg/800px-Pempek_palembang.jpg",
+    "maps_embed_url": "https://maps.google.com/maps?q=Palembang,Sumatera+Selatan,Indonesia&output=embed"
+  }
+]

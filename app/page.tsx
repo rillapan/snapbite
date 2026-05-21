@@ -4,28 +4,29 @@ import foods from "@/data/foods.json";
 import { CameraIcon, BotIcon, MapIcon, MapPinIcon } from "@/components/icons";
 import { FloatingFoodHero } from "@/components/ui/hero-section-7";
 import { CardStack, CardStackItem } from "@/components/ui/card-stack";
+import { FoodCard } from "@/components/ui/cards-1";
 
 export default function HomePage() {
   const heroImages = [
     {
       src: '/images/bakso.png',
       alt: 'Bakso',
-      className: 'w-28 sm:w-36 md:w-52 lg:w-64 top-10 left-4 sm:left-10 md:top-20 md:left-20',
+      className: 'w-16 sm:w-28 md:w-52 lg:w-64 top-6 -left-4 sm:top-10 sm:left-4 md:top-20 md:left-20',
     },
     {
       src: '/images/sate.png',
       alt: 'Sate ayam',
-      className: 'w-24 sm:w-32 md:w-48 top-10 right-4 sm:right-10 md:top-16 md:right-16',
+      className: 'w-14 sm:w-28 md:w-48 top-6 -right-4 sm:top-10 sm:right-4 md:top-16 md:right-16',
     },
     {
       src: '/images/gudek.png',
       alt: 'Gudeg',
-      className: 'w-24 sm:w-32 md:w-48 bottom-8 right-5 sm:right-10 md:bottom-16 md:right-20',
+      className: 'w-14 sm:w-28 md:w-48 bottom-6 -right-4 sm:bottom-8 sm:right-4 md:bottom-16 md:right-20',
     },
     {
       src: '/images/pempek.png',
       alt: 'Pempek',
-      className: 'w-20 sm:w-28 md:w-40 bottom-20 left-4 sm:left-12 md:bottom-24 md:left-24',
+      className: 'w-12 sm:w-24 md:w-40 bottom-16 -left-4 sm:bottom-20 sm:left-6 md:bottom-24 md:left-24',
     },
   ];
 
@@ -79,8 +80,53 @@ export default function HomePage() {
             Jelajahi ragam cita rasa autentik dari berbagai daerah di Indonesia yang wajib Anda cicipi.
           </p>
         </div>
-        
-        <div className="mx-auto w-full max-w-5xl">
+
+        {/* Mobile: 2-column grid */}
+        <div className="md:hidden grid grid-cols-2 gap-4">
+          {[
+            {
+              id: 1,
+              title: "Gudeg",
+              description: "Nangka muda yang dimasak lambat dengan santan dan gula aren.",
+              imageSrc: "/images/Kuliner Pilihan/Gudeg.jpeg",
+            },
+            {
+              id: 2,
+              title: "Sate Padang",
+              description: "Sate daging sapi dengan bumbu kuning kental yang kaya rempah.",
+              imageSrc: "/images/Kuliner Pilihan/Sate padang.jpeg",
+            },
+            {
+              id: 3,
+              title: "Soto Ayam",
+              description: "Sup kaldu ayam kuning khas Indonesia dengan kunyit.",
+              imageSrc: "/images/Kuliner Pilihan/Soto Ayam.jpeg",
+            },
+            {
+              id: 4,
+              title: "Nasi Megono",
+              description: "Nasi dengan cacahan nangka muda khas pesisir utara Jawa.",
+              imageSrc: "/images/Kuliner Pilihan/megono.jpeg",
+            },
+            {
+              id: 5,
+              title: "Pempek",
+              description: "Kue ikan gurih dari Palembang yang disajikan dengan cuko.",
+              imageSrc: "/images/Kuliner Pilihan/pempek.jpeg",
+            },
+          ].map((item, idx, arr) => (
+            <FoodCard
+              key={item.id}
+              title={item.title}
+              description={item.description}
+              imageSrc={item.imageSrc}
+              className={idx === arr.length - 1 && arr.length % 2 !== 0 ? "col-span-2 max-w-[50%] mx-auto w-full" : ""}
+            />
+          ))}
+        </div>
+
+        {/* Desktop: CardStack fan */}
+        <div className="hidden md:block mx-auto w-full max-w-5xl">
           <CardStack
             items={[
               {

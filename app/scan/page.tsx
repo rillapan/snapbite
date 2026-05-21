@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import { ImagePlus, Upload, Trash2, X, Camera } from "lucide-react";
 import foodsData from "@/data/foods.json";
@@ -451,26 +450,27 @@ export default function ScanPage() {
               )}
             </div>
 
-            {result.gambar ? (
-              <div className="relative h-52 bg-[#0D0D0D]">
-                <Image
-                  src={result.gambar}
-                  alt={result.nama}
-                  fill
-                  unoptimized
-                  className="object-cover opacity-85"
-                  sizes="(max-width: 640px) 100vw, 512px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/30 to-transparent" />
-              </div>
-            ) : (
-              <div className="h-52 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
-                <UtensilsIcon className="w-16 h-16 text-white/20" />
-                <p className="text-white/30 text-[11px] uppercase tracking-[2px]">
-                  foto tidak tersedia
-                </p>
-              </div>
-            )}
+            {(() => {
+              const displayImg = result.gambar || previewUrl;
+              return displayImg ? (
+                <div className="relative h-52 bg-[#0D0D0D]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={displayImg}
+                    alt={result.nama}
+                    className="w-full h-full object-cover opacity-85"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/30 to-transparent" />
+                </div>
+              ) : (
+                <div className="h-52 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
+                  <UtensilsIcon className="w-16 h-16 text-white/20" />
+                  <p className="text-white/30 text-[11px] uppercase tracking-[2px]">
+                    foto tidak tersedia
+                  </p>
+                </div>
+              );
+            })()}
 
             <div className="p-6">
               <div className="flex items-center gap-1.5 text-[#FF4D00] text-[10px] font-bold tracking-[2px] uppercase mb-2">

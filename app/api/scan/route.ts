@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import foods from "@/data/foods.json";
 
+// Extend Vercel serverless function timeout (default 10s → 60s)
+export const maxDuration = 60;
+
 type DbFood = (typeof foods)[0];
 
 export type AnyFood = {
@@ -64,13 +67,14 @@ export async function POST(req: NextRequest): Promise<NextResponse<ScanResponse>
   const base64Data = imageBase64.replace(/^data:image\/[a-z+]+;base64,/, "");
   const genAI = new GoogleGenerativeAI(apiKey);
 
-  async function generateWithRetry(prompt: any, isImage = false, maxRetries = 3) {
+  async function generateWithRetry(prompt: any, isImage = false, maxRetries = 2) {
     let lastErr;
-   
-    const modelNames = ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-pro-latest"];
-    
+
+    // Use fast model first; only fall back to pro if flash is unavailable
+    const modelNames = ["gemini-2.0-flash", "gemini-1.5-flash"];
+
     for (let i = 0; i < maxRetries; i++) {
-      const modelName = modelNames[i % modelNames.length];
+      const modelName = modelNames[Math.min(i, modelNames.length - 1)];
       try {
         const model = genAI.getGenerativeModel({ model: modelName });
         if (isImage) {
@@ -84,11 +88,13 @@ export async function POST(req: NextRequest): Promise<NextResponse<ScanResponse>
       } catch (err: any) {
         lastErr = err;
         const msg = err instanceof Error ? err.message : String(err);
-        console.log(`[scan] Attempt ${i + 1} (${modelName}) failed: ${msg}. Retrying...`);
-        
+        console.log(`[scan] Attempt ${i + 1} (${modelName}) failed: ${msg}.`);
+
+        // Don't retry on rate-limit — waiting 400ms won't help a 60s window
+        if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED")) throw err;
+
         if (i < maxRetries - 1) {
-          // Tunggu 2 detik, lalu coba model selanjutnya (atau model yang sama)
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          await new Promise((resolve) => setTimeout(resolve, 400));
           continue;
         }
         throw err;

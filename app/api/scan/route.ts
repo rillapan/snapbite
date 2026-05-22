@@ -67,14 +67,12 @@ export async function POST(req: NextRequest): Promise<NextResponse<ScanResponse>
   const base64Data = imageBase64.replace(/^data:image\/[a-z+]+;base64,/, "");
   const genAI = new GoogleGenerativeAI(apiKey);
 
-  async function generateWithRetry(prompt: any, isImage = false, maxRetries = 2) {
-    let lastErr;
+  async function generateWithRetry(prompt: any, isImage = false, _maxRetries = 2) {
+    // Try each model in order — quota is per-model, so fallback helps on rate limit
+    const modelNames = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"];
+    let lastErr: any;
 
-    // Use fast model first; only fall back to pro if flash is unavailable
-    const modelNames = ["gemini-2.0-flash", "gemini-1.5-flash"];
-
-    for (let i = 0; i < maxRetries; i++) {
-      const modelName = modelNames[Math.min(i, modelNames.length - 1)];
+    for (const modelName of modelNames) {
       try {
         const model = genAI.getGenerativeModel({ model: modelName });
         if (isImage) {
@@ -88,15 +86,12 @@ export async function POST(req: NextRequest): Promise<NextResponse<ScanResponse>
       } catch (err: any) {
         lastErr = err;
         const msg = err instanceof Error ? err.message : String(err);
-        console.log(`[scan] Attempt ${i + 1} (${modelName}) failed: ${msg}.`);
+        console.log(`[scan] Model ${modelName} failed: ${msg.slice(0, 120)}`);
 
-        // Don't retry on rate-limit — waiting 400ms won't help a 60s window
-        if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED")) throw err;
+        // On rate limit, try next model (quota is tracked per-model)
+        if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED")) continue;
 
-        if (i < maxRetries - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 400));
-          continue;
-        }
+        // Other errors (invalid key, network) — no point trying other models
         throw err;
       }
     }

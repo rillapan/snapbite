@@ -126,11 +126,14 @@ JANGAN tambahkan kalimat lain.`;
     const msg = err instanceof Error ? err.message : String(err);
     console.error("[scan] Phase 1 error:", msg);
 
-    if (msg.includes("429") || msg.includes("quota") || msg.includes("RESOURCE_EXHAUSTED")) {
-      const isRateLimit = msg.includes("429") || msg.toLowerCase().includes("per minute") || msg.toLowerCase().includes("rate");
-      const errMsg = isRateLimit
-        ? "Batas permintaan per menit tercapai (rate limit). Tunggu 60 detik lalu coba lagi."
-        : "Kuota harian API Gemini habis. Buat API key baru di aistudio.google.com";
+    if (msg.includes("API_KEY_INVALID") || msg.includes("API key not valid")) {
+      return NextResponse.json({ status: "error", message: "API key tidak valid. Cek kembali key di Vercel Environment Variables." });
+    }
+    if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED")) {
+      const isPerMinute = msg.toLowerCase().includes("per minute") || msg.toLowerCase().includes("rate") || msg.includes("429");
+      const errMsg = isPerMinute
+        ? "Batas permintaan per menit tercapai. Tunggu 60 detik lalu coba lagi."
+        : "Kuota harian API Gemini habis. Tunggu besok atau upgrade ke paket berbayar.";
       return NextResponse.json({ status: "error", message: errMsg });
     }
     return NextResponse.json({ status: "error", message: `AI gagal memproses gambar: ${msg}` });

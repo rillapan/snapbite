@@ -242,7 +242,7 @@ export default function ScanPage() {
         </p>
       </div>
 
-      <div className="max-w-xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 md:px-8 py-12">
         {/* Hidden file input */}
         <input
           ref={fileInputRef}
@@ -254,7 +254,7 @@ export default function ScanPage() {
 
         {/* Upload area */}
         {!previewUrl && (
-          <>
+          <div className="md:max-w-xl md:mx-auto">
             <div
               onClick={handleThumbnailClick}
               onDragOver={handleDragOver}
@@ -304,12 +304,12 @@ export default function ScanPage() {
               <Camera className="w-5 h-5" />
               Ambil Foto dengan Kamera
             </button>
-          </>
+          </div>
         )}
 
         {/* Preview + idle/scanning actions */}
         {previewUrl && status === "idle" && (
-          <div className="border border-[#E5E5E5] overflow-hidden">
+          <div className="md:max-w-xl md:mx-auto border border-[#E5E5E5] overflow-hidden">
             <div className="group relative h-64 bg-[#F2F2F2] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -372,7 +372,7 @@ export default function ScanPage() {
 
         {/* Error panel */}
         {status === "error" && errorMessage && (
-          <div className="border border-red-200 overflow-hidden">
+          <div className="md:max-w-xl md:mx-auto border border-red-200 overflow-hidden">
             <div className="bg-[#0D0D0D] px-5 py-3 flex items-center gap-2">
               <AlertTriangleIcon className="w-5 h-5 text-red-400" />
               <span className="text-white text-[12px] font-bold tracking-[1px] uppercase">
@@ -398,7 +398,7 @@ export default function ScanPage() {
 
         {/* Not found */}
         {status === "notFound" && notFoundName && (
-          <div className="border border-[#E5E5E5] overflow-hidden">
+          <div className="md:max-w-xl md:mx-auto border border-[#E5E5E5] overflow-hidden">
             <div className="bg-[#0D0D0D] px-5 py-3 flex items-center gap-2">
               <SearchIcon className="w-5 h-5 text-[#FF4D00]" />
               <span className="text-white text-[12px] font-bold tracking-[1px] uppercase">
@@ -433,6 +433,7 @@ export default function ScanPage() {
         {/* Result */}
         {status === "done" && result && (
           <div className="border border-[#E5E5E5] overflow-hidden">
+            {/* Status bar */}
             <div className="bg-[#0D0D0D] px-5 py-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-[#FF4D00] rounded-full animate-pulse" />
@@ -450,105 +451,110 @@ export default function ScanPage() {
               )}
             </div>
 
-            {(() => {
-              const displayImg = result.gambar || previewUrl;
-              return displayImg ? (
-                <div className="relative h-52 bg-[#0D0D0D]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={displayImg}
-                    alt={result.nama}
-                    className="w-full h-full object-cover opacity-85"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/30 to-transparent" />
-                </div>
-              ) : (
-                <div className="h-52 bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
-                  <UtensilsIcon className="w-16 h-16 text-white/20" />
-                  <p className="text-white/30 text-[11px] uppercase tracking-[2px]">
-                    foto tidak tersedia
-                  </p>
-                </div>
-              );
-            })()}
-
-            <div className="p-6">
-              <div className="flex items-center gap-1.5 text-[#FF4D00] text-[10px] font-bold tracking-[2px] uppercase mb-2">
-                <MapPinIcon className="w-3 h-3" /> {result.daerah}
-              </div>
-              <h2
-                className="font-sans font-black text-[#0D0D0D] text-2xl mb-1"
-                style={{ letterSpacing: "-1px" }}
-              >
-                {result.nama}
-              </h2>
-              {result.tagline && (
-                <p className="text-[#FF4D00] text-[13px] font-medium italic mb-3">
-                  &ldquo;{result.tagline}&rdquo;
-                </p>
-              )}
-              <p className="text-[#888] text-[13px] leading-relaxed mb-6">{result.deskripsi_singkat}</p>
-
-              {resultSource === "ai" && result.sejarah && (
-                <div className="border-t border-[#E5E5E5] pt-5 mb-6">
-                  <p className="text-[11px] font-bold text-[#FF4D00] tracking-[2px] uppercase mb-3">
-                    Sejarah &amp; Budaya
-                  </p>
-                  <div className="space-y-3">
-                    {result.sejarah.split("\n\n").map((para, i) => (
-                      <p key={i} className="text-[#555] text-[13px] leading-[1.75]">
-                        {para}
-                      </p>
-                    ))}
+            {/* Body: stacked on mobile, side-by-side on desktop */}
+            <div className="md:grid md:grid-cols-[300px_1fr] lg:grid-cols-[380px_1fr]">
+              {/* Image column */}
+              {(() => {
+                const displayImg = result.gambar || previewUrl;
+                return displayImg ? (
+                  <div className="relative h-56 md:h-full md:min-h-[420px] bg-[#0D0D0D]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={displayImg}
+                      alt={result.nama}
+                      className="w-full h-full object-cover opacity-85"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/30 to-transparent" />
                   </div>
-                </div>
-              )}
-
-              {resultSource === "ai" && result.maps_embed_url && (
-                <div className="border border-[#E5E5E5] overflow-hidden h-48 mb-6">
-                  <iframe
-                    src={result.maps_embed_url}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title={`Peta ${result.daerah}`}
-                  />
-                </div>
-              )}
-
-              {resultSource === "ai" && (
-                <p className="text-[#bbb] text-[11px] mb-5 leading-relaxed">
-                  * Info dihasilkan oleh Gemini AI — mungkin tidak 100% akurat.
-                </p>
-              )}
-
-              <div className="flex gap-3">
-                {resultSource === "database" ? (
-                  <Link
-                    href={`/makanan/${result.slug}`}
-                    className="flex-1 bg-[#FF4D00] hover:bg-[#e64400] text-white font-bold py-3 text-center text-[13px] uppercase tracking-[0.5px] transition-colors"
-                  >
-                    Lihat Detail Lengkap →
-                  </Link>
                 ) : (
-                  <a
-                    href={`https://www.google.com/search?q=${encodeURIComponent(result.nama + " makanan Indonesia")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 bg-[#FF4D00] hover:bg-[#e64400] text-white font-bold py-3 text-center text-[13px] uppercase tracking-[0.5px] transition-colors"
-                  >
-                    Cari di Google →
-                  </a>
-                )}
-                <button
-                  onClick={handleReset}
-                  className="px-5 py-3 border border-[#E5E5E5] text-[#888] hover:bg-[#F2F2F2] text-[13px] transition-colors"
+                  <div className="h-56 md:h-full md:min-h-[420px] bg-[#0D0D0D] flex flex-col items-center justify-center gap-3">
+                    <UtensilsIcon className="w-16 h-16 text-white/20" />
+                    <p className="text-white/30 text-[11px] uppercase tracking-[2px]">
+                      foto tidak tersedia
+                    </p>
+                  </div>
+                );
+              })()}
+
+              {/* Info column */}
+              <div className="p-6 md:p-8 md:overflow-y-auto">
+                <div className="flex items-center gap-1.5 text-[#FF4D00] text-[10px] font-bold tracking-[2px] uppercase mb-2">
+                  <MapPinIcon className="w-3 h-3" /> {result.daerah}
+                </div>
+                <h2
+                  className="font-sans font-black text-[#0D0D0D] text-2xl md:text-3xl mb-1"
+                  style={{ letterSpacing: "-1px" }}
                 >
-                  Scan Lagi
-                </button>
+                  {result.nama}
+                </h2>
+                {result.tagline && (
+                  <p className="text-[#FF4D00] text-[13px] font-medium italic mb-3">
+                    &ldquo;{result.tagline}&rdquo;
+                  </p>
+                )}
+                <p className="text-[#888] text-[13px] leading-relaxed mb-6">{result.deskripsi_singkat}</p>
+
+                {resultSource === "ai" && result.sejarah && (
+                  <div className="border-t border-[#E5E5E5] pt-5 mb-6">
+                    <p className="text-[11px] font-bold text-[#FF4D00] tracking-[2px] uppercase mb-3">
+                      Sejarah &amp; Budaya
+                    </p>
+                    <div className="space-y-3">
+                      {result.sejarah.split("\n\n").map((para, i) => (
+                        <p key={i} className="text-[#555] text-[13px] leading-[1.75]">
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {resultSource === "ai" && result.maps_embed_url && (
+                  <div className="border border-[#E5E5E5] overflow-hidden h-48 mb-6">
+                    <iframe
+                      src={result.maps_embed_url}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title={`Peta ${result.daerah}`}
+                    />
+                  </div>
+                )}
+
+                {resultSource === "ai" && (
+                  <p className="text-[#bbb] text-[11px] mb-5 leading-relaxed">
+                    * Info dihasilkan oleh Gemini AI — mungkin tidak 100% akurat.
+                  </p>
+                )}
+
+                <div className="flex gap-3">
+                  {resultSource === "database" ? (
+                    <Link
+                      href={`/makanan/${result.slug}`}
+                      className="flex-1 bg-[#FF4D00] hover:bg-[#e64400] text-white font-bold py-3 text-center text-[13px] uppercase tracking-[0.5px] transition-colors"
+                    >
+                      Lihat Detail Lengkap →
+                    </Link>
+                  ) : (
+                    <a
+                      href={`https://www.google.com/search?q=${encodeURIComponent(result.nama + " makanan Indonesia")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-[#FF4D00] hover:bg-[#e64400] text-white font-bold py-3 text-center text-[13px] uppercase tracking-[0.5px] transition-colors"
+                    >
+                      Cari di Google →
+                    </a>
+                  )}
+                  <button
+                    onClick={handleReset}
+                    className="px-5 py-3 border border-[#E5E5E5] text-[#888] hover:bg-[#F2F2F2] text-[13px] transition-colors"
+                  >
+                    Scan Lagi
+                  </button>
+                </div>
               </div>
             </div>
           </div>

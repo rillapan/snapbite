@@ -59,13 +59,13 @@ export default async function FoodDetailPage({ params }: { params: Promise<{ slu
         <span className="text-[#FF4D00] font-semibold">{food.nama}</span>
       </div>
 
-      <div className="px-6 md:px-[60px] py-12 max-w-4xl">
+      <div className="px-4 md:px-[60px] py-8 md:py-12 max-w-5xl">
         {/* Highlight */}
         <div className="border-l-4 border-[#FF4D00] pl-5 mb-12 bg-[#F2F2F2] py-4 pr-5">
           <p className="text-[#0D0D0D] text-[15px] leading-relaxed font-medium">{food.deskripsi_singkat}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           {/* Sejarah */}
           <div>
             <div className="flex items-baseline gap-3 mb-6 pb-4 border-b border-[#E5E5E5]">

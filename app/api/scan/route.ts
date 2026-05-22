@@ -69,7 +69,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ScanResponse>
 
   async function generateWithRetry(prompt: any, isImage = false, _maxRetries = 2) {
     // Try each model in order — quota is per-model, so fallback helps on rate limit
-    const modelNames = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"];
+    const modelNames = ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-2.5-flash"];
     let lastErr: any;
 
     for (const modelName of modelNames) {
@@ -131,7 +131,10 @@ JANGAN tambahkan kalimat lain.`;
         : "Kuota harian API Gemini habis. Tunggu besok atau upgrade ke paket berbayar.";
       return NextResponse.json({ status: "error", message: errMsg });
     }
-    return NextResponse.json({ status: "error", message: `AI gagal memproses gambar: ${msg}` });
+    if (msg.includes("404") || msg.includes("not found for API version")) {
+      return NextResponse.json({ status: "error", message: "Model AI tidak tersedia. Coba lagi dalam beberapa saat." });
+    }
+    return NextResponse.json({ status: "error", message: "AI gagal memproses gambar. Coba lagi." });
   }
 
   if (!foodName || foodName === "tidak dikenal") {
